@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6C63FF</color>
+    <color name="colorPrimaryDark">#5A52D9</color>
+    <color name="colorAccent">#00D9FF</color>
+    <color name="colorPrimaryVariant">#16213E</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#6C63FF</color>
+    <color name="colorSecondaryVariant">#5A52D9</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorSurface">#16213E</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorBackground">#1A1A2E</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorError">#FF5252</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="cardBackground">#16213E</color>
+    <color name="cardStroke">#6C63FF</color>
+    <color name="background">#1A1A2E</color>
+    <color name="surface">#16213E</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_accent">#00D9FF</color>
+    <color name="warning">#FFD600</color>
+    <color name="telegram_blue">#0088cc</color>
+    <color name="success">#4CAF50</color>
+    <color name="error">#F44336</color>
+    <color name="white">#FFFFFF</color>
+</resources>

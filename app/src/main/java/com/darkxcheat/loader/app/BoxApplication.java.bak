@@ -1,0 +1,123 @@
+package com.darkxcheat.loader.app;
+
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.darkxcheat.loader.Main;
+import org.lsposed.lsparanoid.Obfuscate;
+
+import top.niunaijun.blackbox.BlackBoxCore;
+import top.niunaijun.blackbox.app.configuration.ClientConfiguration;
+
+@Obfuscate
+public class BoxApplication extends Application {
+
+    private boolean startmod = false;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        try {
+            BlackBoxCore.get().doAttachBaseContext(base, new ClientConfiguration() {
+                @Override
+                public String getHostPackageName() {
+                    return base.getPackageName();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        try {
+            BlackBoxCore.get().doCreate();
+            addLifecycleCallback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addLifecycleCallback() {
+        try {
+            BlackBoxCore.get().addAppLifecycleCallback(
+                new top.niunaijun.blackbox.app.configuration.AppLifecycleCallback() {
+                    @Override
+                    public void beforeCreateApplication(String packageName,
+                                                        String processName,
+                                                        Context context,
+                                                        int userId) {
+                        Log.d("BoxApplication", "beforeCreateApplication: " + packageName);
+                    }
+
+                    @Override
+                    public void beforeApplicationOnCreate(String packageName,
+                                                          String processName,
+                                                          Application application,
+                                                          int userId) {
+                        Log.d("BoxApplication", "beforeApplicationOnCreate: " + packageName);
+                    }
+
+                    @Override
+                    public void afterApplicationOnCreate(String packageName,
+                                                         String processName,
+                                                         Application application,
+                                                         int userId) {
+                        Log.d("BoxApplication", "afterApplicationOnCreate: " + packageName);
+                        try {
+                            application.registerActivityLifecycleCallbacks(
+                                new ActivityLifecycleCallbacks() {
+                                    @Override
+                                    public void onActivityCreated(Activity activity,
+                                                                  Bundle savedInstanceState) {
+                                    }
+
+                                    @Override
+                                    public void onActivityStarted(Activity activity) {
+                                    }
+
+                                    @Override
+                                    public void onActivityResumed(Activity activity) {
+                                        if (!startmod) {
+                                            try {
+                                                Main.start();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            startmod = true;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onActivityPaused(Activity activity) {
+                                    }
+
+                                    @Override
+                                    public void onActivityStopped(Activity activity) {
+                                    }
+
+                                    @Override
+                                    public void onActivitySaveInstanceState(Activity activity,
+                                                                            Bundle outState) {
+                                    }
+
+                                    @Override
+                                    public void onActivityDestroyed(Activity activity) {
+                                        startmod = false;
+                                    }
+                                });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
